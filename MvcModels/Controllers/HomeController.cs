@@ -16,7 +16,7 @@ namespace MvcModels.Controllers
             repository = repo;
         }
 
-        public IActionResult Index(int? id)
+        public IActionResult Index([FromQuery] int? id)
         {
             Person person;
             if (id.HasValue && (person = repository[id.Value]) != null)
@@ -28,6 +28,13 @@ namespace MvcModels.Controllers
                 return NotFound();
             }
         }
+
+        public ViewResult Header(HeaderModel model) => View(model);
+
+        public ViewResult Body() => View();
+
+        [HttpPost]
+        public Person Body([FromBody]Person model) => model; 
 
         public ViewResult Create() => View(new Person());
 
